@@ -1,0 +1,300 @@
+/* Custom variables */
+:root {
+  --body-bg-color: hsl(226, 43%, 10%);
+  --card-bg-color: hsl(235, 46%, 20%);
+  --dark-txt-color: hsl(235, 45%, 61%);
+  --med-txt-color: hsl(236, 100%, 87%);
+  --light-txt-color: hsl(0, 0%, 100%);
+  --profile-color: hsl(246, 80%, 60%);
+  --work-color: hsl(15, 100%, 70%);
+  --play-color: hsl(195, 74%, 62%);
+  --study-color: hsl(348, 100%, 68%);
+  --exercise-color: hsl(145, 58%, 55%);
+  --social-color: hsl(264, 64%, 52%);
+  --selfcare-color: hsl(43, 84%, 65%);
+  --hover-card-color: hsl(236, 41%, 34%);
+}
+
+/* Universal, img, li, & button reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+/* body & main */
+body {
+  background-color: var(--body-bg-color);
+  color: var(--light-txt-color);
+  font-family: "Rubik", sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+main {
+  min-height: 100vh;
+  padding: 4rem 0;
+}
+
+/* Screenreader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Grid & Flexbox defaults */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.flex-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styles */
+ul.grid-container {
+  width: clamp(18rem, 100% - 3rem, 28rem);
+}
+
+div.card {
+  background-color: var(--card-bg-color);
+  border-radius: 1rem;
+  padding: 1.75rem;
+}
+
+div.card.profile,
+div.card.widget {
+  height: 100%;
+}
+
+div.card.profile {
+  flex-direction: row;
+  gap: 1rem;
+  background-color: var(--profile-color);
+  z-index: 1;
+}
+
+img.profile-img {
+  width: 4rem;
+  border: 3px solid var(--light-txt-color);
+  border-radius: 50%;
+}
+
+h2.profile-title {
+  align-items: flex-start;
+  color: var(--med-txt-color);
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+span.name {
+  color: var(--light-txt-color);
+  font-size: 1.25rem;
+}
+
+div.card.timeframes {
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 2.75rem;
+  color: var(--dark-txt-color);
+  font-weight: 400;
+}
+
+div.card.widget {
+  gap: 0.5rem;
+}
+
+div.widget-header,
+div.widget-content {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+h3.widget-title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+p.current {
+  font-size: 2rem;
+}
+
+p.previous {
+  color: var(--med-txt-color);
+  font-size: 1rem;
+}
+
+.attribution {
+  font-size: 0.6875rem;
+  text-align: center;
+}
+.attribution a {
+  color: hsl(228, 45%, 44%);
+}
+
+/* Underlays */
+li.stack > :first-child {
+  margin-bottom: -1.5rem;
+}
+
+div.underlay {
+  width: 100%;
+  padding: 1.84375rem;
+  background-repeat: no-repeat;
+  background-position: 95%;
+}
+
+div.underlay.work {
+  background-color: var(--work-color);
+  background-image: url("../images/icon-work.svg");
+}
+
+div.underlay.play {
+  background-color: var(--play-color);
+  background-image: url("../images/icon-play.svg");
+}
+
+div.underlay.study {
+  background-color: var(--study-color);
+  background-image: url("../images/icon-study.svg");
+}
+
+div.underlay.exercise {
+  background-color: var(--exercise-color);
+  background-image: url("../images/icon-exercise.svg");
+  background-position: 95% 0%;
+}
+
+div.underlay.social {
+  background-color: var(--social-color);
+  background-image: url("../images/icon-social.svg");
+}
+
+div.underlay.selfcare {
+  background-color: var(--selfcare-color);
+  background-image: url("../images/icon-self-care.svg");
+  background-position: 95% 0%;
+}
+
+/* Hover and selected states */
+div.card.widget:hover {
+  background-color: var(--hover-card-color);
+}
+
+button.timeframe:hover,
+button.timeframe.selected {
+  color: var(--light-txt-color);
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 768px) {
+  main {
+    padding: 4rem 6rem;
+  }
+
+  ul.grid-container {
+    width: clamp(32rem, 100% - 3rem, 42rem);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  li:first-child {
+    grid-column: 1 / span 2;
+  }
+
+  div.card.timeframes {
+    justify-content: space-around;
+  }
+
+  div.widget-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  span.name {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 1076px) {
+  main {
+    padding: 4rem 10rem;
+  }
+
+  ul.grid-container {
+    width: clamp(50rem, 100% - 3rem, 80rem);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  li:first-child {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+  }
+
+  div.card.profile,
+  div.card.timeframes,
+  div.widget-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  div.card.profile {
+    gap: 2rem;
+    justify-content: flex-start;
+  }
+
+  div.card.timeframes {
+    gap: 1.5rem;
+  }
+
+  div.card.widget {
+    gap: 1.75rem;
+  }
+
+  div.widget-content {
+    gap: 0.5rem;
+  }
+
+  div.underlay {
+    padding: 2.25rem;
+  }
+
+  img.profile-img {
+    width: 5rem;
+  }
+
+  span.name {
+    font-size: 2.5rem;
+  }
+
+  p.current {
+    font-size: 3rem;
+  }
+}

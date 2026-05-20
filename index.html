@@ -1,80 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Time tracking dashboard</title>
+    <title>Frontend Mentor | Time tracking dashboard</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 0.6875rem; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
-</head>
-<body>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
 
-  Report for
-  Jeremy Robson
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
 
-  Daily
-  Weekly
-  Monthly
+    <link rel="stylesheet" href="./assets/css/styles.css" />
 
-  Work
-  5hrs <!-- daily -->
-  Previous - 7hrs <!-- daily -->
-  32hrs <!-- weekly -->
-  Previous - 36hrs <!-- weekly -->
-  103hrs <!-- monthly -->
-  Previous - 128hrs <!-- monthly -->
+    <script src="./assets/js/script.js" defer></script>
+  </head>
+  <body>
+    <main class="flex-container">
+      <h1 class="sr-only">Tracking Dashboard</h1>
 
-  Play
-  1hr <!-- daily -->
-  Previous - 2hrs <!-- daily -->
-  10hrs <!-- weekly -->
-  Previous - 8hrs <!-- weekly -->
-  23hrs <!-- monthly -->
-  Previous - 29hrs <!-- monthly -->
+      <ul class="grid-container">
+        <li class="flex-container stack">
+          <div class="flex-container card profile">
+            <img
+              class="profile-img"
+              src="./assets/images/image-jeremy.png"
+              alt="Headshot of Jeremy smiling"
+            />
+            <h2 class="flex-container profile-title">
+              Report for <span class="name">Jeremy Robson</span>
+            </h2>
+          </div>
+          <div class="flex-container card timeframes">
+            <button id="daily-btn" class="timeframe" type="button">
+              Daily
+            </button>
+            <button id="weekly-btn" class="timeframe selected" type="button">
+              Weekly
+            </button>
+            <button id="monthly-btn" class="timeframe" type="button">
+              Monthly
+            </button>
+          </div>
+        </li>
 
-  Study
-  0hrs <!-- daily -->
-  Previous - 1hr <!-- daily -->
-  4hrs <!-- weekly -->
-  Previous - 7hrs <!-- weekly -->
-  13hrs <!-- monthly -->
-  Previous - 19hrs <!-- monthly -->
+        <li class="flex-container stack">
+          <div class="card underlay work" aria-hidden="true"></div>
+          <div class="flex-container card widget">
+            <div class="flex-container widget-header">
+              <h3 class="widget-title">Work</h3>
+              <img src="./assets/images/icon-ellipsis.svg" alt="" />
+            </div>
+            <div class="flex-container widget-content">
+              <p class="current">32hrs</p>
+              <p class="previous">Last Week - 36hrs</p>
+            </div>
+          </div>
+        </li>
 
-  Exercise
-  1hr <!-- daily -->
-  Previous - 1hr <!-- daily -->
-  4hrs <!-- weekly -->
-  Previous - 5hrs <!-- weekly -->
-  11hrs <!-- monthly -->
-  Previous - 18hrs <!-- monthly -->
+        <li class="flex-container stack">
+          <div class="card underlay play" aria-hidden="true"></div>
+          <div class="flex-container card widget">
+            <div class="flex-container widget-header">
+              <h3 class="widget-title">Play</h3>
+              <img src="./assets/images/icon-ellipsis.svg" alt="" />
+            </div>
+            <div class="flex-container widget-content">
+              <p class="current">10hrs</p>
+              <p class="previous">Last Week - 8hrs</p>
+            </div>
+          </div>
+        </li>
 
-  Social
-  1hr <!-- daily -->
-  Previous - 3hrs <!-- daily -->
-  5hrs <!-- weekly -->
-  Previous - 10hrs <!-- weekly -->
-  21hrs <!-- monthly -->
-  Previous - 23hrs <!-- monthly -->
+        <li class="flex-container stack">
+          <div class="card underlay study" aria-hidden="true"></div>
+          <div class="flex-container card widget">
+            <div class="flex-container widget-header">
+              <h3 class="widget-title">Study</h3>
+              <img src="./assets/images/icon-ellipsis.svg" alt="" />
+            </div>
+            <div class="flex-container widget-content">
+              <p class="current">4hrs</p>
+              <p class="previous">Last Week - 7hrs</p>
+            </div>
+          </div>
+        </li>
 
-  Self Care
-  0hrs <!-- daily -->
-  Previous - 1hr <!-- daily -->
-  2hrs <!-- weekly -->
-  Previous - 2hrs <!-- weekly -->
-  7hrs <!-- monthly -->
-  Previous - 11hrs <!-- monthly -->
+        <li class="flex-container stack">
+          <div class="card underlay exercise" aria-hidden="true"></div>
+          <div class="flex-container card widget">
+            <div class="flex-container widget-header">
+              <h3 class="widget-title">Exercise</h3>
+              <img src="./assets/images/icon-ellipsis.svg" alt="" />
+            </div>
+            <div class="flex-container widget-content">
+              <p class="current">4hrs</p>
+              <p class="previous">Last Week - 5hrs</p>
+            </div>
+          </div>
+        </li>
 
-  
-  <footer class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </footer>
-</body>
+        <li class="flex-container stack">
+          <div class="card underlay social" aria-hidden="true"></div>
+          <div class="flex-container card widget">
+            <div class="flex-container widget-header">
+              <h3 class="widget-title">Social</h3>
+              <img src="./assets/images/icon-ellipsis.svg" alt="" />
+            </div>
+            <div class="flex-container widget-content">
+              <p class="current">5hrs</p>
+              <p class="previous">Last Week - 10hrs</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="flex-container stack">
+          <div class="card underlay selfcare" aria-hidden="true"></div>
+          <div class="flex-container card widget">
+            <div class="flex-container widget-header">
+              <h3 class="widget-title">Self Care</h3>
+              <img src="./assets/images/icon-ellipsis.svg" alt="" />
+            </div>
+            <div class="flex-container widget-content">
+              <p class="current">2hrs</p>
+              <p class="previous">Last Week - 2hrs</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </main>
+
+    <footer class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+      Coded by <a href="#">Leven Carr</a>.
+    </footer>
+  </body>
 </html>
