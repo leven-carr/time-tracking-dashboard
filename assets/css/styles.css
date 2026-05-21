@@ -208,8 +208,8 @@ div.card.widget:hover {
   background-color: var(--hover-card-color);
 }
 
-button.timeframe:hover,
-button.timeframe.selected {
+button.timeframe-btn:hover,
+button.timeframe-btn.selected {
   color: var(--light-txt-color);
 }
 
@@ -242,7 +242,7 @@ button.timeframe.selected {
   }
 }
 
-@media screen and (min-width: 1076px) {
+@media screen and (min-width: 1152px) {
   main {
     padding: 4rem 10rem;
   }
