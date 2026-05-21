@@ -4,7 +4,7 @@ const btnWrapper = document.getElementById("btn-wrapper");
 
 // Access data and populate UI
 async function populateTracker() {
-  const response = await fetch("../assets/data/data.json");
+  const response = await fetch("../data/data.json");
   activities = await response.json();
 
   updateTracker("weekly");
