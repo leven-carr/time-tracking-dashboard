@@ -28,7 +28,7 @@
     <main class="flex-container">
       <h1 class="sr-only">Tracking Dashboard</h1>
 
-      <ul class="grid-container">
+      <ul class="grid-container" id="tracker-grid">
         <li class="flex-container stack">
           <div class="flex-container card profile">
             <img
@@ -40,20 +40,40 @@
               Report for <span class="name">Jeremy Robson</span>
             </h2>
           </div>
-          <div class="flex-container card timeframes">
-            <button id="daily-btn" class="timeframe" type="button">
+          <div class="flex-container card timeframes" id="btn-wrapper">
+            <button data-timeframe="daily" class="timeframe-btn" type="button">
               Daily
             </button>
-            <button id="weekly-btn" class="timeframe selected" type="button">
+            <button data-timeframe="weekly" class="timeframe-btn" type="button">
               Weekly
             </button>
-            <button id="monthly-btn" class="timeframe" type="button">
+            <button
+              data-timeframe="monthly"
+              class="timeframe-btn"
+              type="button"
+            >
               Monthly
             </button>
           </div>
         </li>
 
-        <li class="flex-container stack">
+        <template id="widget-template">
+          <li class="flex-container stack clearable">
+            <div class="card underlay" aria-hidden="true"></div>
+            <div class="flex-container card widget">
+              <div class="flex-container widget-header">
+                <h3 class="widget-title"></h3>
+                <img src="./assets/images/icon-ellipsis.svg" alt="" />
+              </div>
+              <div class="flex-container widget-content">
+                <p class="current"></p>
+                <p class="previous"></p>
+              </div>
+            </div>
+          </li>
+        </template>
+
+        <!-- <li class="flex-container stack">
           <div class="card underlay work" aria-hidden="true"></div>
           <div class="flex-container card widget">
             <div class="flex-container widget-header">
@@ -135,7 +155,7 @@
               <p class="previous">Last Week - 2hrs</p>
             </div>
           </div>
-        </li>
+        </li> -->
       </ul>
     </main>
 
