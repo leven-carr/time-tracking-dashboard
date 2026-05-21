@@ -244,11 +244,11 @@ button.timeframe-btn.selected {
 
 @media screen and (min-width: 1152px) {
   main {
-    padding: 4rem 10rem;
+    padding: 4rem 12rem;
   }
 
   ul.grid-container {
-    width: clamp(50rem, 100% - 3rem, 80rem);
+    width: clamp(50rem, 100% - 4rem, 72rem);
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
