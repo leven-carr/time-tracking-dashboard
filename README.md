@@ -1,112 +1,81 @@
-# Frontend Mentor - Time tracking dashboard
+# Frontend Mentor - Time tracking dashboard solution
 
-![Design preview for the Time tracking dashboard coding challenge](./preview.jpg)
+This is a solution to the [Time tracking dashboard challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/time-tracking-dashboard-UIQ7167Jw). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for checking out this front-end coding challenge.
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+## Overview
 
-**To do this challenge, you need a basic understanding of HTML, CSS and JavaScript.**
+### The challenge
 
-## The challenge
-
-Your challenge is to build out this dashboard and get it looking as close to the design as possible.
-
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
-
-If you would like to practice working with JSON data, we provide a local `data.json` file for the activities. This means you'll be able to pull the data from there instead of using the content in the `.html` file.
-
-Your users should be able to:
+Users should be able to:
 
 - View the optimal layout for the site depending on their device's screen size
 - See hover states for all interactive elements on the page
 - Switch between viewing Daily, Weekly, and Monthly stats
 
-### Want some support on the challenge? 
+### Links
 
-[Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
 
-### Expected behaviour
+## My process
 
-- The text for the previous period's time should change based on the active timeframe. For Daily, it should read "Yesterday" e.g "Yesterday - 2hrs". For Weekly, it should read "Last Week" e.g. "Last Week - 32hrs". For monthly, it should read "Last Month" e.g. "Last Month - 19hrs".
+Setup steps: Create an assets folder to contain images, css, js, and data. Link the favicon, Google font, and styles.css in the head. Include the script tag in the head with a defer attribute. Write the custom variables and the universal reset in styles.css.
 
-## Where to find everything
+Working on the HTML: Create a main element to hold the content with a class of flex-container to be used to center it on the page. Create an h1 element and give it a class of sr-only, so that it will be completely invisible on the page but still present for accessibility purposes. Create a ul element with a class of grid-container and an id of tracker-grid; this will hold all of the cards/widgets in the tracker:
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design.
+- Create an li element with classes of flex-container and stack. This first li will hold the profile card (contains an img and an h2 with a span nested inside it) and the card for the timeframe toggles (contains 3 button elements). This second card, div.btn-wrapper, must also be given an id of btn-wrapper. Each of the buttons must be given a data-timeframe attribute, with the corresponding timeframe as its value (ie, daily, weekly, monthly).
+- At this point, for the static version of the site I hardcoded in each individual widget. However, when I wrote the JS I removed these widgets and instead created a template element:
+  - Create a template element with an id of widget-template. Nested within it, create an li with class="flex-container stack clearable". The li has two direct children; the first is an empty div with class="card underlay" and aria-hidden="true". This first div is simply for decorative purposes; we will use CSS to give it the correct appearance. The second direct child of the li is a div with class="flex-container card widget". It has two children: div.flex-container.widget-header (holds an h3.widget-title and an img for the ellipses icon) and div.flex-container.widget-content (holds p.current and p.previous). The actual textContent of all the elements in the template is left blank, to be filled in via JS.
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`.
+Styling: After the resets, write the starting styles for the body and main elements. Then do some utility classes: .sr-only as well as .grid-container and .flex-container defaults. From there, move onto styling the elements. Some specific rules of note included setting a z-index of 1 on the profile card, so that it would overlay the btn-wrapper card; and setting the first direct child of each li.stack to have a negative margin-bottom in order to scoot the next card up and create the overlap effect. The .underlay cards were targeted as a group for their width, size, background-repeat, and background-position, and then targeted individually to apply the specific background-color and background-image to each one (two of them also had their own background-position set just because their icons didn't fit quite as well with the default style I had set). Next are the hover states and the .selected state for the active button. Lastly are the media queries, which mostly consisted of changing the grid's template and width, with some element's getting an increased font size as well.
 
-If you would like the Figma design file to gain experience using professional tools and build more accurate projects faster, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+JavaScript: Initiate a variable, activities, that will hold the json data. Also initiate variables trackerGrid and btnWrapper to hold their respective DOM elements. Next, write a function definition that will be used to initiate the app. This is an asynchronous function that awaits the response from the data being fetched, and places that data in the global activities variable. The function then invokes another function, updateTracker, with "weekly" passed in as the argument. Outside the populateUI function definition, we define the updateTracker function, which takes in a timeframe as its parameter. The first thing updateTracker does it to call toggleBtn, which takes in as its argument the button whose data-timeframe attribute matches the given timeframe from updateTracker. Then updateTracker moves on to creating the actual widgets. It does this by calling the forEach method on activities. For each activity, it accesses the template from our HTML, clones it, then moves down the template filling in the necessary class and textContent:
 
-You will find all the required assets in the `/images` folder. The assets are already optimized.
+- Find the element with the class of "underlay" within the template clone, access its classList, and add to that classList the value of the current activity's title property, which first has any spaces replaced with empty strings (ie, gets rid of any spaces; this was necessary to prevent a bug with "Self Care") and is converted to lowercase.
+- Find the h3 element with the class of "widget-title" within the clone and set its textContent to the value of the current activity's title property.
+- Find the p element with the class of "current" within the clone and place it in a variable curTime. Set the textContent of curTime to the correct time, which we get by traversing from the current activity object > its timeframe property, which is itself an object > the timeframe object's current property > that value is the desired textContent. This is within a template literal string also containing "hr". After that is an if statement that checks to see if the current time value is not equal to 1, in which case it invokes pluralizeHr with curTime passed in as its argument; pluralizeHr works by taking in an element, accessing its textContent, and concatenating an "s" to that string.
+- The next step works largely the same way as the current time step, however it uses a switch statement to account for the different words needed depending on the timeframe. After the switch statement, it uses pluralizeHr as well.
+- Finally, the completed widget is appended to the DOM inside trackerGrid.
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+Following that function definition, we define a couple helper functions including pluralizeHr (see above), clearTracker, and toggleSelected. clearTracker accesses a node list of all the elements inside trackerGrid that have a class of "clearable", that is, all the activity widgets. It then loops through that list and removes each widget from the DOM. toggleSelected takes in a btn; it works by searching the btnWrapper element for an element with a class of selected, then if it finds one (see the optional chaining syntax ?.) it accesses its classList and removes selected from it. Then it adds selected to the classList of whichever button was passed in.
+At this point in the script we invoke populateTracker() to initialize the app. Below that, there is a click event listener on btnWrapper, that checks to make sure the event was fired by one of the buttons (rather than just the wrapper itself), then runs clearTracker and updateTracker, with the clicked button's timeframe passed in as its argument.
 
-## Using AI coding assistants
+### Built with
 
-We've included two files to help you if you're using AI coding assistants (like Claude, GitHub Copilot, Cursor, etc.) while working on this challenge:
+HTML, CSS, and vanilla JS
 
-- `AGENTS.md` - Contains detailed instructions for AI assistants on how to help you with this challenge. It's tailored to this challenge's difficulty level, so the AI will provide guidance appropriate to your learning stage—offering more support for beginner challenges and encouraging more independence on advanced ones.
-- `CLAUDE.md` - A pointer file that directs Claude-based tools to the AGENTS.md instructions.
+### What I learned
 
-**How to use them:** You don't need to do anything! These files are automatically detected by most AI coding tools. The AI will read them and adjust its behavior to be a better learning partner—guiding you toward solutions rather than just giving you the answers.
+There were a lot of new things I learned in this project. I had a vague understanding of the fetch API beforehand, but this was the first time I had used it in practice without following a tutorial. I also learned about template elements, which I had never used before, as well as the JS method .cloneNode. From what I understand, importNode is the preferred method when cloning fragments across different documents, whereas cloneNode is fine for cloning fragments in one document, and even that distinction is historical. Because I was working just within one document, and because cloneNode has slightly less wordy syntax, I opted to use cloneNode instead of importNode. Other than that, I also learned the optional chaining syntax `?.` which I used to prevent a bug where I was getting an error from attempting to access the classList of null, which happened when toggleSelected was unable to find a button that already had the class "selected".
 
-**Note:** These files are designed to help you *learn*, not to do the work for you. The AI is instructed to ask questions, give hints, and explain concepts rather than writing complete solutions.
+Aside from the things that were brand new to me, this project was a challenging, good learning experience across the board. It sharpened my grid skills (I haven't used grid very often), and had several hiccups that I had to debug. The earliest was a CSS issue; I had initially tried to create the activity widget underlays using the ::before pseudo-element, but that was a nightmare when I tried to format the wider version of the grid, so I went back and created actual elements but gave them aria-hidden="true" so that they wouldn't give screenreaders unnecessary fluff. Ultimately, while I was hesitant about putting unnecessary, decorative elements in the DOM, I do feel like the resulting HTML made more sense than what I had initially tried to do. There were also a lot of small quirks I had to work out in the JS, including the aforementioned bugs where the Self Care widget wasn't generating correctly because of the space, and where toggleSelected was causing an error due to it attempting to access classList on null in its initial call. I also had a lot of trouble figuring out how to pass in the button correctly when toggleSelected was called, because I needed to pass in the parent function's argument as the data-timeframe value of a querySelected button...etc etc. It worked once I realized I needed to use a template literal.
 
-## Building your project
+### Continued development
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+In the future I want to get better about writing code that finds a good balance of using utility styles for certain things, particularly flexboxes, to keep layout styles more independent of more decorative, element-specific styles such as font-size, color, etc.
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+I also want to get better at writing concise JS. I don't know whether my JS file is a reasonable length for this type of project, or if it came out exceedingly verbose. Along with that, I want to continue learning more about best practices for production-ready JS, as I sometimes struggle to move from isolated syntactic exercises to real-world use cases.
 
-## Deploying your project
+Eventually for another challenge I would be interested in refactoring this to actually be a functional app, where a user could visit the site and input their own data.
 
-As mentioned above, there are many ways to host your project for free. Our recommended hosts are:
+### Useful resources
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+- [MDN - Working with JSON](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/JSON) - Helpful for getting a quick understanding of the syntax for a simple fetch request.
+- [MDN template element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template) - Definitely contained some information that went over my head, but was helpful for learning how to use a template element. I still had to look up a couple things, ie, where to place the template in the HTML, whether to use cloneNode or importNode (I went with cloneNode instead of importNode despite MDN's recommendation).
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://www.frontendmentor.io/guides/hosting-your-solution).
+## Author
 
-## Create a custom `README.md`
-
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
-
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
-
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
-
-## Submitting your solution
-
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://www.frontendmentor.io/guides/how-to-submit-solutions) for tips on how to do this.
-
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
-
-## Sharing your solution
-
-There are multiple places you can share your solution:
-
-1. Share your solution page in the **#finished-projects** channel of the [community](https://www.frontendmentor.io/community). 
-2. Share on [X (formerly Twitter)](https://x.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in your post. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on [LinkedIn](https://www.linkedin.com/company/frontend-mentor/).
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback.
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
-
-**Have fun building!** 🚀
+- Frontend Mentor - [@leven-carr](https://www.frontendmentor.io/profile/leven-carr)
+- GitHub - [@leven-carr](https://github.com/leven-carr)
