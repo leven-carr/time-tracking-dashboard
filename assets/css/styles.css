@@ -168,7 +168,7 @@ div.underlay {
   width: 100%;
   padding: 1.84375rem;
   background-repeat: no-repeat;
-  background-position: 95%;
+  background-position: 90%;
 }
 
 div.underlay.work {
@@ -189,7 +189,7 @@ div.underlay.study {
 div.underlay.exercise {
   background-color: var(--exercise-color);
   background-image: url("../images/icon-exercise.svg");
-  background-position: 95% 0%;
+  background-position: 90% 0%;
 }
 
 div.underlay.social {
@@ -200,7 +200,7 @@ div.underlay.social {
 div.underlay.selfcare {
   background-color: var(--selfcare-color);
   background-image: url("../images/icon-self-care.svg");
-  background-position: 95% 0%;
+  background-position: 90% 100%;
 }
 
 /* Hover and selected states */
@@ -248,9 +248,10 @@ button.timeframe-btn.selected {
   }
 
   ul.grid-container {
-    width: clamp(50rem, 100% - 4rem, 72rem);
+    width: clamp(50rem, 100% - 3rem, 72rem);
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
+    gap: 1.75rem;
   }
 
   li:first-child {
@@ -283,7 +284,7 @@ button.timeframe-btn.selected {
   }
 
   div.underlay {
-    padding: 2.25rem;
+    padding: 2rem;
   }
 
   img.profile-img {
